@@ -5,21 +5,21 @@
         "bus_name": "VCAN",
         "nodes": [
           {
-            "node_name": "front_driveline",
+            "node_name": "rear_driveline",
             "can_peripheral": "CAN1",
             "tx": [
               {
-                "msg_name":"front_mag",
-                "msg_desc":"magnetometer reading from front bmm350 and front mmc",
+                "msg_name":"rear_mag",
+                "msg_desc":"magnetometer reading from rear bmm350 and rear mmc",
                 "signals": [
                 {
-                  "sig_name":"front_mag_bmm350",
+                  "sig_name":"mag_bmm350_rear",
                   "sig_desc": "Magnetic field in microteslas from bmm350",
                   "type":"int32_t",
                   "unit":"uT"
                 },
                 {
-                  "sig_name":"front_mag_mmc",
+                  "sig_name":"rear_mag_mmc",
                   "sig_desc": "Magnetic field in microteslas from mmc",
                   "type":"int32_t",
                   "unit":"uT"
@@ -29,18 +29,18 @@
                 "msg_priority": 3
               },
               {
-                "msg_name": "front_shock_driveline",
-                "msg_desc": "Shockpot readings from front left and front right",
+                "msg_name": "rear_shock_driveline",
+                "msg_desc": "Shockpot readings from rear left and rear right",
                 "signals": [
                   {
                     "sig_name": "left_shock",
-                    "sig_desc": "Travel distance of front left shockpot",
+                    "sig_desc": "Travel distance of rear left shockpot",
                     "type": "int16_t",
                     "unit": "mm"
                   },
                   {
                     "sig_name": "right_shock",
-                    "sig_desc": "Travel distance of front right shockpot",
+                    "sig_desc": "Travel distance of rear right shockpot",
                     "type": "int16_t",
                     "unit": "mm"
                   }
@@ -49,7 +49,7 @@
                 "msg_priority": 3
               },
               {
-                "msg_name": "front_load_sensor_readings_driveline",
+                "msg_name": "rear_load_sensor_readings_driveline",
                 "msg_desc": "Load Sensor readings from left and right",
                 "signals": [
                   {
@@ -69,18 +69,18 @@
                 "msg_priority": 3
               },
               {
-                "msg_name": "front_brake_temps",
-                "msg_desc":"IR temps from front",
+                "msg_name": "rear_brake_temps",
+                "msg_desc":"IR temps from rear",
                 "signals":[
                   {
                       "sig_name":"left_brake",
-                      "sig_desc":"IR temp from front left",
+                      "sig_desc":"IR temp from rear left",
                       "type":"int16_t",
                       "unit":"degC"
                   },
                   {
                     "sig_name":"right_brake",
-                    "sig_desc":"IR temp from front right",
+                    "sig_desc":"IR temp from rear right",
                     "type":"int16_t",
                     "unit":"degC"
                 }
@@ -99,11 +99,11 @@
         "bus_name": "TCAN",
         "nodes": [
           {
-            "node_name": "front_driveline",
+            "node_name": "rear_driveline",
             "can_peripheral": "CAN2",
             "tx": [
               {
-                "msg_name": "front_tire_temp_left",
+                "msg_name": "rear_tire_temp_left",
                 "msg_desc": "Forwarded raw tire temperature data from TCAN",
                 "signals": [
                   { 
@@ -122,7 +122,7 @@
                 "msg_priority": 3
               },
               {
-                "msg_name": "front_tire_temp_right",
+                "msg_name": "rear_tire_temp_right",
                 "msg_desc": "Forwarded raw tire temperature data from TCAN",
                 "signals": [
                   { 

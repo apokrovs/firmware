@@ -12,8 +12,8 @@
 #include "common/queue/queue.h"
 #include "common_defs.h"
 #include "external/STM32CubeF4/Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
-#include "source/front_driveline/can/can_parse.h"
-#include "/can/can_parse.h"
+#include "source/rear_driveline/can/can_parse.h"
+#include "can/can_parse.h"
 /* Module Includes */
 #include <stdint.h>
 
@@ -34,8 +34,8 @@ GPIOInitConfig_t gpio_config[] = {
     //Magnometer i2c
 
     //IR Temperature
-    GPIO_INIT_ANALOG(BRAKE_TEMP_FL_GPIO_Port, BRAKE_TEMP_FL_Pin),
-    GPIO_INIT_ANALOG(BRAKE_TEMP_FR_GPIO_Port, BRAKE_TEMP_FR_Pin),
+    GPIO_INIT_ANALOG(BRAKE_TEMP_RL_GPIO_Port, BRAKE_TEMP_RL_Pin),
+    GPIO_INIT_ANALOG(BRAKE_TEMP_RR_GPIO_Port, BRAKE_TEMP_RR_Pin),
 
     //Load Cells
     GPIO_INIT_ANALOG(LOAD_FL_GPIO_Port, LOAD_FL_Pin),
@@ -62,8 +62,8 @@ ADCChannelConfig_t adc_channel_config[] = {
     {.channel = SHOCK_POT_R_ADC_CH, .rank = 6, .sampling_time = ADC_CHN_SMP_CYCLES_480},
     {.channel = LOAD_FL_ADC_CH, .rank = 7, .sampling_time = ADC_CHN_SMP_CYCLES_480},
     {.channel = LOAD_FR_ADC_CH, .rank = 8, .sampling_time = ADC_CHN_SMP_CYCLES_480},
-    {.channel = BRAKE_TEMP_FL_ADC_CH, .rank = 9, .sampling_time = ADC_CHN_SMP_CYCLES_480},
-    {.channel = BRAKE_TEMP_FR_ADC_CH, .rank = 10, .sampling_time = ADC_CHN_SMP_CYCLES_480},
+    {.channel = BRAKE_TEMP_RL_ADC_CH, .rank = 9, .sampling_time = ADC_CHN_SMP_CYCLES_480},
+    {.channel = BRAKE_TEMP_RR_ADC_CH, .rank = 10, .sampling_time = ADC_CHN_SMP_CYCLES_480},
 
 };
 
@@ -126,7 +126,7 @@ void sendBrakeTemps() {
     double brake_temp_v_r = raw_adc_values.brake_temp_right;
     brake_temp_l = (int16_t) (brake_temp_v_l - 0.5)/0.005;
     brake_temp_r = (int16_t) (brake_temp_v_r - 0.5)/0.005;
-    SEND_FRONT_BRAKE_TEMPS(brake_temp_l, brake_temp_r);
+   SEND_REAR_SHOCK_DRIVELINE(brake_temp_l, brake_temp_r);
 
 }
 
@@ -142,7 +142,7 @@ void sendLoadCells() {
     load_l_kg = (load_l / LOAD_VOLT_MAX) * LOAD_CELL_CALIBRATION; 
     load_r_kg = (load_r / LOAD_VOLT_MAX) * LOAD_CELL_CALIBRATION; 
 
-    SEND_FRONT_LOAD_SENSOR_READINGS_DRIVELINE(load_l_kg,load_r_kg);
+    SEND_REAR_LOAD_SENSOR_READINGS_DRIVELINE(load_l_kg,load_r_kg);
 }
 
 
@@ -183,7 +183,7 @@ void sendShockpots() {
     float shock_r_adjusted = POT_MAX_DIST - shock_r_scaled - POT_DIST_DROOP_R;
     shock_r_displacement = (int16_t)(-shock_r_adjusted);
 
-    SEND_FRONT_SHOCK_DRIVELINE(shock_l_displacement, shock_r_displacement);
+    SEND_REAR_SHOCK_DRIVELINE(shock_l_displacement, shock_r_displacement);
 }
 
 void preflightChecks(void) {
